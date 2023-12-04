@@ -1,0 +1,44 @@
+[
+  {
+    "inputs": [],
+    "name": "ImproperLength",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ImproperPublicKey",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "getPublicKey",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "public_key",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "public_key",
+        "type": "bytes"
+      }
+    ],
+    "name": "submitPublicKey",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

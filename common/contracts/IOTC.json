@@ -1,0 +1,1161 @@
+[
+  {
+    "inputs": [],
+    "name": "ImproperLength",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ImproperPublicKey",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "addToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "text",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "privateChat",
+        "type": "bool"
+      }
+    ],
+    "name": "createPosition",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "positionIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "arbiter",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "createProcess",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "processIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.ProcessPointer",
+        "name": "processPointer",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "finishProcess",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getArbiterBips",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "arbiterBips",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMaxBips",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "maxBips",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPermit2",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "permit2",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "positionIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPosition",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startedCounter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "privateChat",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.Position",
+        "name": "position",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token",
+        "name": "token",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPositions",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startedCounter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "privateChat",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.Position[]",
+        "name": "positions",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token[]",
+        "name": "tokens",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newCursor",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPositionsByCreator",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startedCounter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "privateChat",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.Position[]",
+        "name": "positions",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token[]",
+        "name": "tokens",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newCursor",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "processIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.ProcessPointer",
+        "name": "processPointer",
+        "type": "tuple"
+      }
+    ],
+    "name": "getProcess",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startedCounter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "privateChat",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.Position",
+        "name": "position",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token",
+        "name": "positionToken",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "customer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "arbiter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "text",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct IOTC.Message[]",
+            "name": "messages",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum IOTC.ProcessStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "positionIndex",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "processIndex",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IOTC.ProcessPointer",
+            "name": "processPointer",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct IOTC.Process",
+        "name": "process",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token",
+        "name": "processToken",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "positionIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "getProcesses",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startedCounter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "privateChat",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.Position",
+        "name": "position",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token",
+        "name": "positionToken",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "customer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "arbiter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "text",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct IOTC.Message[]",
+            "name": "messages",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum IOTC.ProcessStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "positionIndex",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "processIndex",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IOTC.ProcessPointer",
+            "name": "processPointer",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct IOTC.Process[]",
+        "name": "processes",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token[]",
+        "name": "processTokens",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newCursor",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "participant",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cursor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "getProcessesByPaticipant",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "limit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startedCounter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "privateChat",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.Position[]",
+        "name": "positions",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token[]",
+        "name": "positionTokens",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "customer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "arbiter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "text",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct IOTC.Message[]",
+            "name": "messages",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum IOTC.ProcessStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "positionIndex",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "processIndex",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IOTC.ProcessPointer",
+            "name": "processPointer",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct IOTC.Process[]",
+        "name": "processes",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token[]",
+        "name": "processTokens",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "newCursor",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getProtocolBips",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "protocolBips",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getZeroX",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "zerox",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "removeToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "processIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.ProcessPointer",
+        "name": "processPointer",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "name": "sendMessage",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "positionIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "processIndex",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IOTC.ProcessPointer",
+        "name": "processPointer",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint160",
+        "name": "amount",
+        "type": "uint160"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "startProcess",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "whitelistedTokens",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IOTC.Token[]",
+        "name": "tokens",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawFees",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

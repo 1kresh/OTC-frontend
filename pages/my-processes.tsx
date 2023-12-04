@@ -12,11 +12,10 @@ import ImproperConnected from 'components/ImproperConnected.tsx'
 import ExceptionLayout from 'components/ExceptionLayout'
 
 import IOTC from 'common/contracts/IOTC.json'
-import { OTCs, MAX_UINT256 } from 'constants/index.tsx'
-import { formatUnits } from 'viem'
+import { OTCs, processStatuses } from 'constants/index.tsx'
 import { LoadingOutlined } from '@ant-design/icons'
 
-const AllPositions: NextPage = () => {
+const MyProcesses: NextPage = () => {
   const { isConnected, address } = useAccount()
   const { chain } = useNetwork()
 
@@ -25,8 +24,8 @@ const AllPositions: NextPage = () => {
   const { data, isError, isLoading } = useContractRead({
     address: OTCs[chain?.id],
     abi: IOTC,
-    functionName: 'getPositions',
-    args: [cursor, 200],
+    functionName: 'getProcessesByPaticipant',
+    args: [address, cursor, 200],
     watch: true,
   })
   const positions = useMemo(() => {
@@ -34,10 +33,22 @@ const AllPositions: NextPage = () => {
       return null
     }
 
-    return data[0].map((position, i) => {
+    return data[0].map((position, index) => {
       return {
         ...position,
-        token: data[1][i],
+        token: data[1][index],
+      }
+    })
+  }, [data])
+  const processes = useMemo(() => {
+    if (!data) {
+      return null
+    }
+
+    return data[2].map((process, index) => {
+      return {
+        ...process,
+        token: data[3][index],
       }
     })
   }, [data])
@@ -46,16 +57,16 @@ const AllPositions: NextPage = () => {
     <>
       <Header />
       {isConnected && !chain?.unsupported ? (
-        !positions ? (
+        !positions || !processes ? (
           <ExceptionLayout child={<LoadingOutlined />} />
         ) : (
           <>
-            {positions.length != 0 ? (
+            {processes.length != 0 ? (
               <Flex vertical style={{ padding: '5rem 20rem' }} gap='3rem'>
-                {positions.map((position, index) => (
+                {processes.map((process, index) => (
                   <Link
                     key={index}
-                    href={`/position/${position.positionIndex}`}
+                    href={`/process/${process.processPointer.positionIndex}/${process.processPointer.processIndex}`}
                   >
                     <div
                       style={{
@@ -68,33 +79,28 @@ const AllPositions: NextPage = () => {
                         key={index}
                         title={
                           <>
-                            <Tag bordered={false} color='processing'>
-                              Creator:{' '}
-                              {position.creator === address
-                                ? 'You'
-                                : position.creator}
+                            <Tag
+                              color={
+                                process.status === 0 || process.status === 1
+                                  ? 'processing'
+                                  : process.status === 2
+                                  ? 'error'
+                                  : 'success'
+                              }
+                            >
+                              Status: {processStatuses[process.status]}
                             </Tag>
                           </>
                         }
                         extra={
                           <>
-                            <Tag bordered={false} color='processing'>
-                              Price:{' '}
-                              {formatUnits(
-                                position.amount,
-                                Number(position.token.decimals)
-                              )}{' '}
-                              {position.token.symbol}
-                            </Tag>
-                            <Tag bordered={false} color='processing'>
-                              {position.limit === MAX_UINT256 ? (
-                                <>Unlimited</>
-                              ) : (
-                                <>
-                                  Sold: {position.startedCounter.toString()}/
-                                  {position.limit.toString()}
-                                </>
-                              )}
+                            <Tag color='processing'>
+                              You are{' '}
+                              <span style={{ fontWeight: '700' }}>
+                                {process.customer === address
+                                  ? 'a customer'
+                                  : 'an arbiter'}
+                              </span>
                             </Tag>
                           </>
                         }
@@ -107,7 +113,7 @@ const AllPositions: NextPage = () => {
                         className='card'
                       >
                         <div className='markdown-container'>
-                          <ReactMarkdown>{position.text}</ReactMarkdown>
+                          <ReactMarkdown>{positions[index].text}</ReactMarkdown>
                         </div>
                       </Card>
                       <div className='ghosting'></div>
@@ -116,7 +122,7 @@ const AllPositions: NextPage = () => {
                 ))}
               </Flex>
             ) : (
-              <ExceptionLayout child={<>There is no positions.</>} />
+              <ExceptionLayout child={<>You don't have processes.</>} />
             )}
           </>
         )
@@ -127,4 +133,4 @@ const AllPositions: NextPage = () => {
   )
 }
 
-export default AllPositions
+export default MyProcesses
