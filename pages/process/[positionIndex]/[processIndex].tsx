@@ -174,10 +174,10 @@ const Position: NextPage = () => {
     let amount = 0n
     let calldata = ''
     if (position.amount !== 0n) {
-      amount =
-        position.amount +
-        (position.amount * 500n) / 10000n +
-        (position.amount * 100n) / 10000n
+      amount = position.amount + (position.amount * 100n) / 10000n
+      if (process.arbiter !== ZERO_ADDRESS) {
+        amount += (position.amount * 500n) / 10000n
+      }
 
       if (position.token.addr !== process.token.addr) {
         const data = await getSwapQuote(
