@@ -222,7 +222,7 @@ const Position: NextPage = () => {
                     width: '50%',
                     overflow: 'auto',
                     minHeight: '50vh',
-                    maxHeight: '40rem',
+                    maxHeight: '45rem',
                   }}
                 >
                   <ReactMarkdown>{position.text}</ReactMarkdown>
