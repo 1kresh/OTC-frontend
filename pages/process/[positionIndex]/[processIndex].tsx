@@ -1,22 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { NextPage } from 'next'
 
-import {
-  Menu,
-  Card,
-  Flex,
-  Layout,
-  Space,
-  Tag,
-  Input,
-  Checkbox,
-  Select,
-  Button,
-  message,
-  Avatar,
-  Typography,
-  Popconfirm,
-} from 'antd'
+import { Card, Flex, Tag, Input, Button, message, Popconfirm } from 'antd'
 import { LoadingOutlined, SendOutlined } from '@ant-design/icons'
 
 import { useRouter } from 'next/router'
@@ -27,18 +12,21 @@ import {
   useNetwork,
   useContractRead,
   useContractWrite,
-  useEnsAvatar,
 } from 'wagmi'
 
-import Header from 'components/Header.tsx'
-import ImproperConnected from 'components/ImproperConnected.tsx'
-import ExceptionLayout from 'components/ExceptionLayout'
-import ChatCard from 'components/ChatCard'
+import Header from '../../../components/Header'
+import ImproperConnected from '../../../components/ImproperConnected'
+import ExceptionLayout from '../../../components/ExceptionLayout'
+import ChatCard from '../../../components/ChatCard'
 
-import IOTC from 'common/contracts/IOTC.json'
-import { OTCs, MAX_UINT256 } from 'constants/index.tsx'
-import { formatUnits, parseUnits } from 'viem'
-import { ZERO_ADDRESS, processStatuses } from '../../../constants'
+import IOTC from '../../../common/contracts/IOTC.json'
+import { formatUnits } from 'viem'
+import {
+  OTCs,
+  MAX_UINT256,
+  ZERO_ADDRESS,
+  processStatuses,
+} from '../../../constants'
 
 import blockies from 'ethereum-blockies'
 
@@ -49,8 +37,8 @@ const Position: NextPage = () => {
   const { isConnected, address } = useAccount()
   const { chain } = useNetwork()
 
-  const { data: processData } = useContractRead({
-    address: OTCs[chain?.id],
+  const { data: processData }: any = useContractRead({
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'getProcess',
     args: [[router.query.positionIndex, router.query.processIndex]],
@@ -78,35 +66,11 @@ const Position: NextPage = () => {
     }
   }, [processData])
 
-  const { data: whitelistedTokensData } = useContractRead({
-    address: OTCs[chain?.id],
-    abi: IOTC,
-    functionName: 'whitelistedTokens',
-  })
-  const whitelistedTokens = useMemo(() => {
-    if (!whitelistedTokensData) {
-      return {}
-    }
-
-    const whitelistedTokens_: any = {}
-
-    whitelistedTokensData.map((token) => {
-      whitelistedTokens_[token.addr] = {
-        value: token.addr,
-        label: token.symbol,
-        decimals: token.decimals,
-        name: token.name,
-      }
-    })
-
-    return whitelistedTokens_
-  }, [whitelistedTokensData])
-
   const [text, setText] = useState('')
   const [approved, setApproved] = useState(true)
 
   const { isLoading: isLoadingOnSend, write: sendMessage } = useContractWrite({
-    address: OTCs[chain?.id],
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'sendMessage',
     args: [[router.query.positionIndex, router.query.processIndex], text],
@@ -130,7 +94,7 @@ const Position: NextPage = () => {
     write: startProcess,
     writeAsync,
   } = useContractWrite({
-    address: OTCs[chain?.id],
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'startProcess',
     onSuccess: () => {
@@ -149,7 +113,7 @@ const Position: NextPage = () => {
 
   const { isLoading: isLoadingOnFinish, write: finishProcess } =
     useContractWrite({
-      address: OTCs[chain?.id],
+      address: OTCs[chain?.id ?? 11155111],
       abi: IOTC,
       functionName: 'finishProcess',
       args: [[router.query.positionIndex, router.query.processIndex], approved],
@@ -167,11 +131,16 @@ const Position: NextPage = () => {
       },
     })
 
-  const createBlockie = (address) => {
+  const createBlockie = (address: any) => {
     return blockies.create({ seed: address, size: 8, scale: 16 }).toDataURL()
   }
 
-  const getSwapQuote = async (chainId, buyToken, sellToken, buyAmount) => {
+  const getSwapQuote = async (
+    chainId: any,
+    buyToken: any,
+    sellToken: any,
+    buyAmount: any
+  ) => {
     try {
       const apiUrl = `/api/swap?chainId=${encodeURIComponent(
         chainId
@@ -202,7 +171,7 @@ const Position: NextPage = () => {
   }
 
   const startProcessInit = async () => {
-    let amount = 0
+    let amount = 0n
     let calldata = ''
     if (position.amount !== 0n) {
       amount =
@@ -368,7 +337,7 @@ const Position: NextPage = () => {
                           <Popconfirm
                             title='Reject the process'
                             description='Are you sure to reject this process?'
-                            onConfirm={finishProcess}
+                            onConfirm={() => finishProcess()}
                             okText='Yes'
                             cancelText='No'
                           >
@@ -386,7 +355,7 @@ const Position: NextPage = () => {
                           <Popconfirm
                             title='Approve the process'
                             description='Are you sure to approve this process?'
-                            onConfirm={finishProcess}
+                            onConfirm={() => finishProcess()}
                             okText='Yes'
                             cancelText='No'
                           >
@@ -396,7 +365,6 @@ const Position: NextPage = () => {
                               onClick={() => setApproved(true)}
                               loading={isLoadingOnFinish}
                               icon={<SendOutlined />}
-                              size='large'
                             >
                               Approve process
                             </Button>
@@ -411,8 +379,9 @@ const Position: NextPage = () => {
                         vertical
                         style={{ overflowY: 'auto', height: '35rem' }}
                       >
-                        {process.messages.map((message) => (
+                        {process.messages.map((message: any, index: number) => (
                           <Flex
+                            key={index}
                             justify={
                               message.sender === address ? 'end' : 'start'
                             }
@@ -431,7 +400,7 @@ const Position: NextPage = () => {
                           value={text}
                           onChange={(e) => setText(e.target.value)}
                           loading={isLoadingOnSend}
-                          onSearch={sendMessage}
+                          onSearch={() => sendMessage()}
                           enterButton={<SendOutlined />}
                         />
                       </Flex>

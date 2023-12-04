@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { NextPage } from 'next'
 
-import { Menu, Card, Flex, Layout, Space, Tag } from 'antd'
+import { Card, Flex, Tag } from 'antd'
 import Link from 'next/link'
 
 import ReactMarkdown from 'react-markdown'
 import { useAccount, useNetwork, useContractRead } from 'wagmi'
 
-import Header from 'components/Header.tsx'
-import ImproperConnected from 'components/ImproperConnected.tsx'
-import ExceptionLayout from 'components/ExceptionLayout'
+import Header from '../components/Header'
+import ImproperConnected from '../components/ImproperConnected'
+import ExceptionLayout from '../components/ExceptionLayout'
 
-import IOTC from 'common/contracts/IOTC.json'
-import { OTCs, MAX_UINT256 } from 'constants/index.tsx'
+import IOTC from '../common/contracts/IOTC.json'
+import { OTCs, MAX_UINT256 } from '../constants'
 import { formatUnits } from 'viem'
 import { LoadingOutlined } from '@ant-design/icons'
 
@@ -22,8 +22,8 @@ const AllPositions: NextPage = () => {
 
   const [cursor, setCursor] = useState(0)
 
-  const { data, isError, isLoading } = useContractRead({
-    address: OTCs[chain?.id],
+  const { data }: any = useContractRead({
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'getPositions',
     args: [cursor, 200],
@@ -34,7 +34,7 @@ const AllPositions: NextPage = () => {
       return null
     }
 
-    return data[0].map((position, i) => {
+    return data[0].map((position: any, i: any) => {
       return {
         ...position,
         token: data[1][i],
@@ -52,7 +52,7 @@ const AllPositions: NextPage = () => {
           <>
             {positions.length != 0 ? (
               <Flex vertical style={{ padding: '5rem 20rem' }} gap='3rem'>
-                {positions.map((position, index) => (
+                {positions.map((position: any, index: number) => (
                   <Link
                     key={index}
                     href={`/position/${position.positionIndex}`}

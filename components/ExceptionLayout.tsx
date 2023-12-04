@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Menu, Card, Flex, Layout } from 'antd'
-import { useNetwork } from 'wagmi'
+import { Flex } from 'antd'
 
-const ExceptionLayout = ({ child }) => {
+const ExceptionLayout = ({ child }: any) => {
   return (
     <Flex
       style={{

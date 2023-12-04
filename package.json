@@ -26,6 +26,7 @@
     "wagmi": "~1.4.7"
   },
   "devDependencies": {
+    "@types/ethereum-blockies": "^0.1.2",
     "@types/node": "^18.18.10",
     "@types/react": "^18.2.37",
     "eslint": "^8.15.0",

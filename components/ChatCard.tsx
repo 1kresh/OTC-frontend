@@ -19,7 +19,7 @@ import {
   Typography,
 } from 'antd'
 
-const ChatCard = ({ sender, avatar, message }) => {
+const ChatCard = ({ sender, avatar, message }: any) => {
   return (
     <Card style={{ width: 300, marginTop: 16 }} bordered={false}>
       <Card.Meta

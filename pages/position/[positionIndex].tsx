@@ -1,19 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { NextPage } from 'next'
 
-import {
-  Menu,
-  Card,
-  Flex,
-  Layout,
-  Space,
-  Tag,
-  Input,
-  Checkbox,
-  Select,
-  Button,
-  message,
-} from 'antd'
+import { Card, Flex, Tag, Input, Checkbox, Select, Button, message } from 'antd'
 import { LoadingOutlined, SendOutlined } from '@ant-design/icons'
 
 import Link from 'next/link'
@@ -28,15 +16,15 @@ import {
   erc20ABI,
 } from 'wagmi'
 
-import Header from 'components/Header.tsx'
-import ImproperConnected from 'components/ImproperConnected.tsx'
-import ExceptionLayout from 'components/ExceptionLayout'
+import Header from '../../components/Header'
+import ImproperConnected from '../../components/ImproperConnected'
+import ExceptionLayout from '../../components/ExceptionLayout'
 
-import IOTC from 'common/contracts/IOTC.json'
-import IPermit2 from 'common/contracts/IPermit2.json'
+import IOTC from '../../common/contracts/IOTC.json'
+import IPermit2 from '../../common/contracts/IPermit2.json'
 
-import { OTCs, MAX_UINT256, ZERO_ADDRESS, permit2s } from 'constants/index.tsx'
-import { formatUnits, parseUnits } from 'viem'
+import { OTCs, MAX_UINT256, ZERO_ADDRESS, permit2s } from '../../constants'
+import { formatUnits } from 'viem'
 import {
   MAX_UINT160,
   MAX_UINT48,
@@ -48,13 +36,13 @@ const Position: NextPage = () => {
   const [messageApi, contextHolder] = message.useMessage()
   const router = useRouter()
 
-  const { isConnected, address } = useAccount()
+  const { isConnected, address }: any = useAccount()
   const { chain } = useNetwork()
 
   const [cursor, setCursor] = useState(0)
 
-  const { data: positionData } = useContractRead({
-    address: OTCs[chain?.id],
+  const { data: positionData }: any = useContractRead({
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'getProcesses',
     args: [router.query.positionIndex, cursor, 200],
@@ -76,7 +64,7 @@ const Position: NextPage = () => {
       return []
     }
 
-    return positionData[2].map((process, index) => {
+    return positionData[2].map((process: any, index: number) => {
       return {
         ...process,
         token: positionData[3][index],
@@ -84,8 +72,8 @@ const Position: NextPage = () => {
     })
   }, [positionData])
 
-  const { data: whitelistedTokensData } = useContractRead({
-    address: OTCs[chain?.id],
+  const { data: whitelistedTokensData }: any = useContractRead({
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'whitelistedTokens',
   })
@@ -96,7 +84,7 @@ const Position: NextPage = () => {
 
     const whitelistedTokens_: any = {}
 
-    whitelistedTokensData.map((token) => {
+    whitelistedTokensData.map((token: any) => {
       whitelistedTokens_[token.addr] = {
         value: token.addr,
         label: token.symbol,
@@ -113,10 +101,10 @@ const Position: NextPage = () => {
   const [token, setToken] = useState('')
 
   const { data: tokenAllowanceData } = useContractRead({
-    address: token,
+    address: token as `0x${string}`,
     abi: erc20ABI,
     functionName: 'allowance',
-    args: [address, permit2s[chain?.id]],
+    args: [address, permit2s[chain?.id ?? 11155111]],
     watch: true,
   })
   const tokenAllowance = useMemo(() => {
@@ -127,11 +115,11 @@ const Position: NextPage = () => {
     return tokenAllowanceData
   }, [tokenAllowanceData])
 
-  const { data: permit2AllowanceData } = useContractRead({
-    address: permit2s[chain?.id],
+  const { data: permit2AllowanceData }: any = useContractRead({
+    address: permit2s[chain?.id ?? 11155111],
     abi: IPermit2,
     functionName: 'allowance',
-    args: [address, token, OTCs[chain?.id]],
+    args: [address, token, OTCs[chain?.id ?? 11155111]],
     watch: true,
   })
   const permit2Allowance = useMemo(() => {
@@ -143,10 +131,10 @@ const Position: NextPage = () => {
   }, [permit2AllowanceData])
 
   const { isLoading: isLoadingOnApprove, write: approve } = useContractWrite({
-    address: token,
+    address: token as `0x${string}`,
     abi: erc20ABI,
     functionName: 'approve',
-    args: [permit2s[chain?.id], MAX_UINT256],
+    args: [permit2s[chain?.id ?? 11155111], MAX_UINT256],
     onSuccess: () => {
       messageApi.open({
         type: 'success',
@@ -163,10 +151,10 @@ const Position: NextPage = () => {
 
   const { isLoading: isLoadingOnPermit2Approve, write: permit2Approve } =
     useContractWrite({
-      address: permit2s[chain?.id],
+      address: permit2s[chain?.id ?? 11155111],
       abi: IPermit2,
       functionName: 'approve',
-      args: [token, OTCs[chain?.id], MAX_UINT160, MAX_UINT48],
+      args: [token, OTCs[chain?.id ?? 11155111], MAX_UINT160, MAX_UINT48],
       onSuccess: () => {
         messageApi.open({
           type: 'success',
@@ -183,7 +171,7 @@ const Position: NextPage = () => {
 
   const { isLoading: isLoadingOnCreate, write: createProcess } =
     useContractWrite({
-      address: OTCs[chain?.id],
+      address: OTCs[chain?.id ?? 11155111],
       abi: IOTC,
       functionName: 'createProcess',
       args: [router.query.positionIndex, arbiter, token],
@@ -328,7 +316,7 @@ const Position: NextPage = () => {
                               <Select
                                 value={token}
                                 onChange={(value) => setToken(value)}
-                                options={Object.values(whitelistedTokens)}
+                                options={Object.values(whitelistedTokens) as []}
                                 style={{ width: '5rem' }}
                               />
                             </Flex>
@@ -377,8 +365,9 @@ const Position: NextPage = () => {
                           There is no processes.
                         </div>
                       ) : (
-                        processes.map((process, index) => (
+                        processes.map((process: any, index: number) => (
                           <Link
+                            key={index}
                             href={`/process/${process.processPointer.positionIndex}/${process.processPointer.processIndex}`}
                             style={{ width: '100%' }}
                           >

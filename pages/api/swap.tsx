@@ -2,8 +2,11 @@ import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 import NextCors from 'nextjs-cors'
 
-const endpoints = {
-  11155111: 'sepolia.api.0x.org',
+const getEndpoint = (chainId: any) => {
+  if (chainId === '11155111') {
+    return 'sepolia.api.0x.org'
+  }
+  return ''
 }
 
 export default async function handler(
@@ -25,7 +28,9 @@ export default async function handler(
 
   try {
     // Construct the 0x API URL
-    const apiUrl = `https://${endpoints[chainId]}/swap/v1/quote?buyToken=${buyToken}&sellToken=${sellToken}&buyAmount=${buyAmount}`
+    const apiUrl = `https://${getEndpoint(
+      chainId
+    )}/swap/v1/quote?buyToken=${buyToken}&sellToken=${sellToken}&buyAmount=${buyAmount}`
 
     // Make the request to the 0x API
     const response = await axios.get(apiUrl, {
@@ -35,12 +40,10 @@ export default async function handler(
     })
 
     // Return the data from the 0x API
-    res
-      .status(200)
-      .json({
-        calldata: response.data.data,
-        sellAmount: response.data.sellAmount,
-      })
+    res.status(200).json({
+      calldata: response.data.data,
+      sellAmount: response.data.sellAmount,
+    })
   } catch (error) {
     console.log(error)
     // Handle any errors

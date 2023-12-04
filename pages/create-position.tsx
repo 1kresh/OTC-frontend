@@ -18,9 +18,6 @@ import {
 } from 'antd'
 import { LoadingOutlined, SendOutlined } from '@ant-design/icons'
 
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-
 import ReactMarkdown from 'react-markdown'
 import {
   useAccount,
@@ -29,12 +26,12 @@ import {
   useContractWrite,
 } from 'wagmi'
 
-import Header from 'components/Header.tsx'
-import ImproperConnected from 'components/ImproperConnected.tsx'
-import ExceptionLayout from 'components/ExceptionLayout'
+import Header from '../components/Header'
+import ImproperConnected from '../components/ImproperConnected'
+import ExceptionLayout from '../components/ExceptionLayout'
 
-import IOTC from 'common/contracts/IOTC.json'
-import { OTCs, MAX_UINT256 } from 'constants/index.tsx'
+import IOTC from '../common/contracts/IOTC.json'
+import { OTCs, MAX_UINT256 } from '../constants'
 import { parseUnits } from 'viem'
 
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
@@ -47,8 +44,8 @@ const CreatePosition: NextPage = () => {
   const { isConnected } = useAccount()
   const { chain } = useNetwork()
 
-  const { data } = useContractRead({
-    address: OTCs[chain?.id],
+  const { data }: any = useContractRead({
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'whitelistedTokens',
   })
@@ -59,7 +56,7 @@ const CreatePosition: NextPage = () => {
 
     const whitelistedTokens_: any = {}
 
-    data.map((token) => {
+    data.map((token: any) => {
       whitelistedTokens_[token.addr] = {
         value: token.addr,
         label: token.symbol,
@@ -93,7 +90,7 @@ const CreatePosition: NextPage = () => {
   }, [amount, whitelistedTokens, token])
 
   const { isLoading, write: createPosition } = useContractWrite({
-    address: OTCs[chain?.id],
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'createPosition',
     args: [markdown, limitParsed, token, amountParsed, isPrivateChat],
@@ -202,7 +199,7 @@ const CreatePosition: NextPage = () => {
                     <Select
                       value={token}
                       onChange={(value) => setToken(value)}
-                      options={Object.values(whitelistedTokens)}
+                      options={Object.values(whitelistedTokens) as []}
                       style={{ width: '5rem' }}
                     />
                   </Flex>

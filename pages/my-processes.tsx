@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { NextPage } from 'next'
 
-import { Menu, Card, Flex, Layout, Space, Tag } from 'antd'
+import { Card, Flex, Tag } from 'antd'
 import Link from 'next/link'
 
 import ReactMarkdown from 'react-markdown'
 import { useAccount, useNetwork, useContractRead } from 'wagmi'
 
-import Header from 'components/Header.tsx'
-import ImproperConnected from 'components/ImproperConnected.tsx'
-import ExceptionLayout from 'components/ExceptionLayout'
+import Header from '../components/Header'
+import ImproperConnected from '../components/ImproperConnected'
+import ExceptionLayout from '../components/ExceptionLayout'
 
-import IOTC from 'common/contracts/IOTC.json'
-import { OTCs, processStatuses } from 'constants/index.tsx'
+import IOTC from '../common/contracts/IOTC.json'
+import { OTCs, processStatuses } from '../constants'
 import { LoadingOutlined } from '@ant-design/icons'
 
 const MyProcesses: NextPage = () => {
@@ -21,8 +21,8 @@ const MyProcesses: NextPage = () => {
 
   const [cursor, setCursor] = useState(0)
 
-  const { data, isError, isLoading } = useContractRead({
-    address: OTCs[chain?.id],
+  const { data }: any = useContractRead({
+    address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'getProcessesByPaticipant',
     args: [address, cursor, 200],
@@ -33,7 +33,7 @@ const MyProcesses: NextPage = () => {
       return null
     }
 
-    return data[0].map((position, index) => {
+    return data[0].map((position: any, index: number) => {
       return {
         ...position,
         token: data[1][index],
@@ -45,7 +45,7 @@ const MyProcesses: NextPage = () => {
       return null
     }
 
-    return data[2].map((process, index) => {
+    return data[2].map((process: any, index: number) => {
       return {
         ...process,
         token: data[3][index],
@@ -63,7 +63,7 @@ const MyProcesses: NextPage = () => {
           <>
             {processes.length != 0 ? (
               <Flex vertical style={{ padding: '5rem 20rem' }} gap='3rem'>
-                {processes.map((process, index) => (
+                {processes.map((process: any, index: number) => (
                   <Link
                     key={index}
                     href={`/process/${process.processPointer.positionIndex}/${process.processPointer.processIndex}`}
@@ -122,7 +122,7 @@ const MyProcesses: NextPage = () => {
                 ))}
               </Flex>
             ) : (
-              <ExceptionLayout child={<>You don't have processes.</>} />
+              <ExceptionLayout child={<>You don&apos;t have processes.</>} />
             )}
           </>
         )

@@ -1,16 +1,16 @@
-export const OTCs = {
+export const OTCs: any = {
   11155111: '0x36352faEDec46a695A9711b04e0063773A8A098e',
 }
 
-export const registers = {
+export const registers: any = {
   11155111: '0xB4Cd113344782D671F0Cf93f96BBC950eD4D2f7F',
 }
 
-export const permit2s = {
+export const permit2s: any = {
   11155111: '0x000000000022d473030f116ddee9f6b43ac78ba3',
 }
 
-export const processStatuses = {
+export const processStatuses: any = {
   0: 'Created',
   1: 'In Progress',
   2: 'Rejected',
