@@ -1,23 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { NextPage } from 'next'
-import dynamic from 'next/dynamic'
+import React from 'react'
 import 'react-markdown-editor-lite/lib/index.css'
 
-import {
-  Menu,
-  Card,
-  Flex,
-  Layout,
-  Space,
-  Tag,
-  Input,
-  Checkbox,
-  Select,
-  Button,
-  message,
-  Avatar,
-  Typography,
-} from 'antd'
+import { Card, Avatar, Typography } from 'antd'
 
 const ChatCard = ({ sender, avatar, message }: any) => {
   return (

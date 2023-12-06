@@ -19,18 +19,14 @@ import {
 import Header from '../../components/Header'
 import ImproperConnected from '../../components/ImproperConnected'
 import ExceptionLayout from '../../components/ExceptionLayout'
+import PositionMiniCard from '../../components/PositionMiniCard'
+import ProcessMiniCard from '../../components/ProcessMiniCard'
 
 import IOTC from '../../common/contracts/IOTC.json'
 import IPermit2 from '../../common/contracts/IPermit2.json'
 
 import { OTCs, MAX_UINT256, ZERO_ADDRESS, permit2s } from '../../constants'
-import { formatUnits } from 'viem'
-import {
-  MAX_UINT160,
-  MAX_UINT48,
-  processStatuses,
-  MAX_UINT96,
-} from '../../constants'
+import { MAX_UINT160, MAX_UINT48, MAX_UINT96 } from '../../constants'
 
 const Position: NextPage = () => {
   const [messageApi, contextHolder] = message.useMessage()
@@ -56,6 +52,7 @@ const Position: NextPage = () => {
     return {
       ...positionData[0],
       token: positionData[1],
+      type: 0,
     }
   }, [positionData])
 
@@ -235,45 +232,7 @@ const Position: NextPage = () => {
                   gap='10px'
                   vertical
                 >
-                  <Card
-                    className='card'
-                    title={
-                      <Tag bordered={false} color='processing'>
-                        Position #{position.positionIndex.toString()}
-                      </Tag>
-                    }
-                  >
-                    <Flex>
-                      <Tag bordered={false} color='processing'>
-                        Creator:{' '}
-                        {position.creator === address
-                          ? 'You'
-                          : position.creator}
-                      </Tag>
-                      <Tag bordered={false} color='processing'>
-                        Price:{' '}
-                        {formatUnits(
-                          position.amount,
-                          Number(position.token.decimals)
-                        )}{' '}
-                        {position.token.symbol}
-                      </Tag>
-
-                      <Tag bordered={false} color='processing'>
-                        {position.limit === MAX_UINT256 ? (
-                          <>Unlimited</>
-                        ) : (
-                          <>
-                            Sold: {position.startedCounter.toString()}/
-                            {position.limit.toString()}
-                          </>
-                        )}
-                      </Tag>
-                      <Tag bordered={false} color='processing'>
-                        {position.privateChat ? 'Private Chat' : 'Public Chat'}
-                      </Tag>
-                    </Flex>
-                  </Card>
+                  <PositionMiniCard position={position} />
                   {position.creator !== address && (
                     <Card className='card'>
                       <Flex align='center' gap='2rem' vertical>
@@ -311,7 +270,9 @@ const Position: NextPage = () => {
                             vertical
                             gap='0.5rem'
                           >
-                            <div style={{ fontWeight: '500' }}>Token</div>
+                            <div style={{ fontWeight: '500' }}>
+                              Payment token
+                            </div>
                             <Flex gap='0.5rem'>
                               <Select
                                 value={token}
@@ -371,46 +332,7 @@ const Position: NextPage = () => {
                             href={`/process/${process.processPointer.positionIndex}/${process.processPointer.processIndex}`}
                             style={{ width: '100%' }}
                           >
-                            <Card
-                              key={index}
-                              className='card'
-                              title={
-                                <Tag color='processing'>
-                                  Process #
-                                  {process.processPointer.processIndex.toString()}
-                                </Tag>
-                              }
-                            >
-                              <Flex justify='space-between'>
-                                <div>
-                                  <Tag
-                                    color={
-                                      process.status === 0 ||
-                                      process.status === 1
-                                        ? 'processing'
-                                        : process.status === 2
-                                        ? 'error'
-                                        : 'success'
-                                    }
-                                  >
-                                    Status:{' '}
-                                    {processStatuses[Number(process.status)]}
-                                  </Tag>
-                                </div>
-                                <div>
-                                  <Tag color={'processing'}>
-                                    {process.arbiter === ZERO_ADDRESS
-                                      ? 'No Arbiter'
-                                      : process.arbiter === address
-                                      ? 'Arbiter: You'
-                                      : `Arbiter: ${process.arbiter}`}
-                                  </Tag>
-                                  <Tag color={'processing'}>
-                                    Token: {process.token.symbol}
-                                  </Tag>
-                                </div>
-                              </Flex>
-                            </Card>
+                            <ProcessMiniCard process={process} />
                           </Link>
                         ))
                       )}

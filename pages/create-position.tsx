@@ -15,6 +15,7 @@ import {
   Select,
   Button,
   message,
+  Typography,
 } from 'antd'
 import { LoadingOutlined, SendOutlined } from '@ant-design/icons'
 
@@ -124,6 +125,11 @@ const CreatePosition: NextPage = () => {
             }}
           >
             <Card style={{ width: '90%', borderColor: '#bdbfbe' }}>
+              <Flex justify='center'>
+                <Typography.Title level={4}>
+                  Position description
+                </Typography.Title>
+              </Flex>
               <Flex gap={'10px'}>
                 <Card
                   style={{
