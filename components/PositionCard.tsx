@@ -25,9 +25,9 @@ const PositionCard = ({ position }: any) => {
             <>
               <Tag
                 bordered={false}
-                color={position.type === 0 ? 'error' : 'success'}
+                color={position.type_ === 0 ? 'error' : 'success'}
               >
-                #{position.type === 0 ? 'Sell' : 'Buy'}
+                #{position.type_ === 0 ? 'Sell' : 'Buy'}
               </Tag>
               <Tag bordered={false} color='processing'>
                 Creator:{' '}

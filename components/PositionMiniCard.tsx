@@ -19,8 +19,11 @@ const PositionMiniCard = ({ position }: any) => {
       }
     >
       <Flex>
-        <Tag bordered={false} color={position.type === 0 ? 'error' : 'success'}>
-          #{position.type === 0 ? 'Sell' : 'Buy'}
+        <Tag
+          bordered={false}
+          color={position.type_ === 0 ? 'error' : 'success'}
+        >
+          #{position.type_ === 0 ? 'Sell' : 'Buy'}
         </Tag>
         <Tag bordered={false} color='processing'>
           Creator: {position.creator === address ? 'You' : position.creator}

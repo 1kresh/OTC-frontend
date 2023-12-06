@@ -25,6 +25,11 @@
   {
     "inputs": [
       {
+        "internalType": "enum IOTC.PositionType",
+        "name": "type_",
+        "type": "uint8"
+      },
+      {
         "internalType": "string",
         "name": "text",
         "type": "string"
@@ -165,6 +170,11 @@
             "type": "address"
           },
           {
+            "internalType": "enum IOTC.PositionType",
+            "name": "type_",
+            "type": "uint8"
+          },
+          {
             "internalType": "string",
             "name": "text",
             "type": "string"
@@ -256,6 +266,11 @@
             "internalType": "address",
             "name": "creator",
             "type": "address"
+          },
+          {
+            "internalType": "enum IOTC.PositionType",
+            "name": "type_",
+            "type": "uint8"
           },
           {
             "internalType": "string",
@@ -361,6 +376,11 @@
             "type": "address"
           },
           {
+            "internalType": "enum IOTC.PositionType",
+            "name": "type_",
+            "type": "uint8"
+          },
+          {
             "internalType": "string",
             "name": "text",
             "type": "string"
@@ -464,6 +484,11 @@
             "internalType": "address",
             "name": "creator",
             "type": "address"
+          },
+          {
+            "internalType": "enum IOTC.PositionType",
+            "name": "type_",
+            "type": "uint8"
           },
           {
             "internalType": "string",
@@ -650,6 +675,11 @@
             "internalType": "address",
             "name": "creator",
             "type": "address"
+          },
+          {
+            "internalType": "enum IOTC.PositionType",
+            "name": "type_",
+            "type": "uint8"
           },
           {
             "internalType": "string",
@@ -841,6 +871,11 @@
             "internalType": "address",
             "name": "creator",
             "type": "address"
+          },
+          {
+            "internalType": "enum IOTC.PositionType",
+            "name": "type_",
+            "type": "uint8"
           },
           {
             "internalType": "string",
