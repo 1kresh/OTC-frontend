@@ -1,5 +1,5 @@
 export const OTCs: any = {
-  11155111: '0xeED8f3FE034687879DF46039519913444C23b0A7',
+  11155111: '0xace66cbacA499728208Ce131f995db7B9484FC48',
 }
 
 export const registers: any = {

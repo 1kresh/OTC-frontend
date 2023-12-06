@@ -69,6 +69,7 @@ const CreatePosition: NextPage = () => {
     return whitelistedTokens_
   }, [data])
 
+  const [positionType, setPositionType] = useState(0)
   const [markdown, setMarkdown] = useState('')
   const [isPrivateChat, setIsPrivateChat] = useState(false)
   const [limit, setLimit] = useState(1)
@@ -94,7 +95,14 @@ const CreatePosition: NextPage = () => {
     address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'createPosition',
-    args: [markdown, limitParsed, token, amountParsed, isPrivateChat],
+    args: [
+      positionType,
+      markdown,
+      limitParsed,
+      token,
+      amountParsed,
+      isPrivateChat,
+    ],
     onSuccess: () => {
       messageApi.open({
         type: 'success',
@@ -216,6 +224,7 @@ const CreatePosition: NextPage = () => {
                   <Checkbox
                     checked={isPrivateChat}
                     onChange={(e) => setIsPrivateChat(e.target.checked)}
+                    disabled
                   ></Checkbox>
                 </Flex>
               </Flex>
