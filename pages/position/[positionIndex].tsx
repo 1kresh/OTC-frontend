@@ -14,6 +14,8 @@ import {
   useContractRead,
   useContractWrite,
   erc20ABI,
+  useWaitForTransaction,
+  usePrepareContractWrite,
 } from 'wagmi'
 
 import Header from '../../components/Header'
@@ -127,11 +129,29 @@ const Position: NextPage = () => {
     return permit2AllowanceData[0]
   }, [permit2AllowanceData])
 
-  const { isLoading: isLoadingOnApprove, write: approve } = useContractWrite({
+  const { config: approveConfig } = usePrepareContractWrite({
     address: token as `0x${string}`,
     abi: erc20ABI,
     functionName: 'approve',
     args: [permit2s[chain?.id ?? 11155111], MAX_UINT256],
+  })
+
+  const {
+    isLoading: isLoadingOnApprove,
+    write: approve,
+    data: approveData,
+  } = useContractWrite({
+    ...approveConfig,
+    onError: () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Something went wrong!',
+      })
+    },
+  })
+
+  const { isLoading: isLoadingOnApproveTransaction } = useWaitForTransaction({
+    hash: approveData?.hash,
     onSuccess: () => {
       messageApi.open({
         type: 'success',
@@ -146,12 +166,30 @@ const Position: NextPage = () => {
     },
   })
 
-  const { isLoading: isLoadingOnPermit2Approve, write: permit2Approve } =
-    useContractWrite({
-      address: permit2s[chain?.id ?? 11155111],
-      abi: IPermit2,
-      functionName: 'approve',
-      args: [token, OTCs[chain?.id ?? 11155111], MAX_UINT160, MAX_UINT48],
+  const { config: permit2ApproveConfig } = usePrepareContractWrite({
+    address: permit2s[chain?.id ?? 11155111],
+    abi: IPermit2,
+    functionName: 'approve',
+    args: [token, OTCs[chain?.id ?? 11155111], MAX_UINT160, MAX_UINT48],
+  })
+
+  const {
+    isLoading: isLoadingOnPermit2Approve,
+    write: permit2Approve,
+    data: permit2ApproveData,
+  } = useContractWrite({
+    ...permit2ApproveConfig,
+    onError: () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Something went wrong!',
+      })
+    },
+  })
+
+  const { isLoading: isLoadingOnPermit2ApproveTransaction } =
+    useWaitForTransaction({
+      hash: permit2ApproveData?.hash,
       onSuccess: () => {
         messageApi.open({
           type: 'success',
@@ -166,12 +204,30 @@ const Position: NextPage = () => {
       },
     })
 
-  const { isLoading: isLoadingOnCreate, write: createProcess } =
-    useContractWrite({
-      address: OTCs[chain?.id ?? 11155111],
-      abi: IOTC,
-      functionName: 'createProcess',
-      args: [router.query.positionIndex, arbiter, token],
+  const { config: createProcessConfig } = usePrepareContractWrite({
+    address: OTCs[chain?.id ?? 11155111],
+    abi: IOTC,
+    functionName: 'createProcess',
+    args: [router.query.positionIndex, arbiter, token],
+  })
+
+  const {
+    isLoading: isLoadingOnCreateProcess,
+    write: createProcess,
+    data: createProcessData,
+  } = useContractWrite({
+    ...createProcessConfig,
+    onError: () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Something went wrong!',
+      })
+    },
+  })
+
+  const { isLoading: isLoadingOnCreateProcessTransaction } =
+    useWaitForTransaction({
+      hash: createProcessData?.hash,
       onSuccess: () => {
         messageApi.open({
           type: 'success',
@@ -288,8 +344,11 @@ const Position: NextPage = () => {
                             <Button
                               type='primary'
                               size='large'
-                              onClick={() => approve()}
-                              loading={isLoadingOnApprove}
+                              onClick={() => approve?.()}
+                              loading={
+                                isLoadingOnApprove ||
+                                isLoadingOnApproveTransaction
+                              }
                               icon={<SendOutlined />}
                             >
                               Approve to Permit2
@@ -298,8 +357,11 @@ const Position: NextPage = () => {
                             <Button
                               type='primary'
                               size='large'
-                              onClick={() => permit2Approve()}
-                              loading={isLoadingOnPermit2Approve}
+                              onClick={() => permit2Approve?.()}
+                              loading={
+                                isLoadingOnPermit2Approve ||
+                                isLoadingOnPermit2ApproveTransaction
+                              }
                               icon={<SendOutlined />}
                             >
                               Approve with Permit2
@@ -308,8 +370,11 @@ const Position: NextPage = () => {
                             <Button
                               type='primary'
                               size='large'
-                              onClick={() => createProcess()}
-                              loading={isLoadingOnCreate}
+                              onClick={() => createProcess?.()}
+                              loading={
+                                isLoadingOnCreateProcess ||
+                                isLoadingOnCreateProcessTransaction
+                              }
                               icon={<SendOutlined />}
                             >
                               Create process

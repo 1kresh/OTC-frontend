@@ -16,8 +16,15 @@ import {
   Button,
   message,
   Typography,
+  Badge,
+  Tooltip,
 } from 'antd'
-import { LoadingOutlined, SendOutlined } from '@ant-design/icons'
+import {
+  InfoCircleOutlined,
+  LoadingOutlined,
+  SendOutlined,
+  WarningOutlined,
+} from '@ant-design/icons'
 
 import ReactMarkdown from 'react-markdown'
 import {
@@ -25,6 +32,8 @@ import {
   useNetwork,
   useContractRead,
   useContractWrite,
+  useWaitForTransaction,
+  usePrepareContractWrite,
 } from 'wagmi'
 
 import Header from '../components/Header'
@@ -91,7 +100,7 @@ const CreatePosition: NextPage = () => {
     )
   }, [amount, whitelistedTokens, token])
 
-  const { isLoading, write: createPosition } = useContractWrite({
+  const { config: createPositionConfig } = usePrepareContractWrite({
     address: OTCs[chain?.id ?? 11155111],
     abi: IOTC,
     functionName: 'createPosition',
@@ -103,12 +112,14 @@ const CreatePosition: NextPage = () => {
       amountParsed,
       isPrivateChat,
     ],
-    onSuccess: () => {
-      messageApi.open({
-        type: 'success',
-        content: 'Success!',
-      })
-    },
+  })
+
+  const {
+    isLoading: isLoadingOnCreatePosition,
+    write: createPosition,
+    data: createPositionData,
+  } = useContractWrite({
+    ...createPositionConfig,
     onError: () => {
       messageApi.open({
         type: 'error',
@@ -116,6 +127,23 @@ const CreatePosition: NextPage = () => {
       })
     },
   })
+
+  const { isLoading: isLoadingOnCreatePositionTransaction } =
+    useWaitForTransaction({
+      hash: createPositionData?.hash,
+      onSuccess: () => {
+        messageApi.open({
+          type: 'success',
+          content: 'Success!',
+        })
+      },
+      onError: () => {
+        messageApi.open({
+          type: 'error',
+          content: 'Something went wrong!',
+        })
+      },
+    })
 
   return (
     <>
@@ -220,11 +248,30 @@ const CreatePosition: NextPage = () => {
                 </Flex>
 
                 <Flex justify='center' align='center' vertical gap='0.5rem'>
-                  <div style={{ fontWeight: '500' }}>Private Chat</div>
+                  {isPrivateChat ? (
+                    <div style={{ fontWeight: '500' }}>
+                      Private Chat{' '}
+                      <Tooltip
+                        title={
+                          <Flex vertical>
+                            <Flex>Use it with caution!</Flex>
+                            <Flex>
+                              You will need to submit your private key to
+                              decrypt messages.
+                            </Flex>
+                          </Flex>
+                        }
+                        color={'gold'}
+                      >
+                        <InfoCircleOutlined style={{ color: 'orange' }} />
+                      </Tooltip>
+                    </div>
+                  ) : (
+                    <div style={{ fontWeight: '500' }}>Private Chat</div>
+                  )}
                   <Checkbox
                     checked={isPrivateChat}
                     onChange={(e) => setIsPrivateChat(e.target.checked)}
-                    disabled
                   ></Checkbox>
                 </Flex>
               </Flex>
@@ -236,8 +283,11 @@ const CreatePosition: NextPage = () => {
                 <Button
                   type='primary'
                   size='large'
-                  onClick={() => createPosition()}
-                  loading={isLoading}
+                  onClick={() => createPosition?.()}
+                  loading={
+                    isLoadingOnCreatePosition ||
+                    isLoadingOnCreatePositionTransaction
+                  }
                   icon={<SendOutlined />}
                 >
                   Create new position

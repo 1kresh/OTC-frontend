@@ -585,6 +585,11 @@
                 "internalType": "string",
                 "name": "text",
                 "type": "string"
+              },
+              {
+                "internalType": "bool",
+                "name": "isPrivate",
+                "type": "bool"
               }
             ],
             "internalType": "struct IOTC.Message[]",
@@ -776,6 +781,11 @@
                 "internalType": "string",
                 "name": "text",
                 "type": "string"
+              },
+              {
+                "internalType": "bool",
+                "name": "isPrivate",
+                "type": "bool"
               }
             ],
             "internalType": "struct IOTC.Message[]",
@@ -972,6 +982,11 @@
                 "internalType": "string",
                 "name": "text",
                 "type": "string"
+              },
+              {
+                "internalType": "bool",
+                "name": "isPrivate",
+                "type": "bool"
               }
             ],
             "internalType": "struct IOTC.Message[]",
@@ -1103,6 +1118,11 @@
         "internalType": "string",
         "name": "text",
         "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "isPrivate",
+        "type": "bool"
       }
     ],
     "name": "sendMessage",
