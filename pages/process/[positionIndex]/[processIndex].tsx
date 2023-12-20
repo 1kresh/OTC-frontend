@@ -131,7 +131,6 @@ const Position: NextPage = () => {
     })
 
   async function encryptMessage(publicKey: any, message: any) {
-    console.log(publicKey, 'publicKey')
     const encrypted = await EthCrypto.encryptWithPublicKey(publicKey, message)
     const encryptedString = EthCrypto.cipher.stringify(encrypted)
     return encryptedString

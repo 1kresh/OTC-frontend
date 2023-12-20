@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from 'react'
 import { NextPage } from 'next'
 
-import { Card, Flex, Tag } from 'antd'
-import Link from 'next/link'
+import { Flex } from 'antd'
 
-import ReactMarkdown from 'react-markdown'
 import { useAccount, useNetwork, useContractRead } from 'wagmi'
 
 import Header from '../components/Header'
